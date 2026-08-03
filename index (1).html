@@ -1,0 +1,1095 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notifiquei Pro</title>
+    <!-- Fonts Google: VT323 (Retro Tech) + Plus Jakarta Sans (Modern Clean UI) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        /* ==================== VARIAVEIS E TEMAS (GLASS + RETRO) ==================== */
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent-glow: #a855f7;
+            --pix-color: #10b981;
+            --gold-premium: #f59e0b;
+            --retro-cyan: #06b6d4;
+            --retro-pink: #ec4899;
+            
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #311042 100%);
+            --app-bg-image: none;
+            
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-card: rgba(30, 41, 59, 0.55);
+            --glass-input: rgba(15, 23, 42, 0.6);
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-retro: #38bdf8;
+            
+            --blur-val: 16px;
+            --brightness-val: 100%;
+            --shadow-glow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        [data-theme="light"] {
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-card: rgba(241, 245, 249, 0.75);
+            --glass-input: rgba(255, 255, 255, 0.8);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg-gradient: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #fce7f3 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            overflow-x: hidden;
+            transition: background 0.3s ease;
+        }
+
+        /* Dynamic Custom App Background Layer */
+        #customBgOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Container estilo Smartphone Moldura Retro-Modern */
+        .mobile-frame {
+            width: 100%;
+            max-width: 440px;
+            min-height: 840px;
+            max-height: 92vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-val)) brightness(var(--brightness-val));
+            -webkit-backdrop-filter: blur(var(--blur-val)) brightness(var(--brightness-val));
+            border: 1px solid var(--glass-border);
+            border-radius: 36px;
+            box-shadow: var(--shadow-glow), 0 0 20px rgba(99, 102, 241, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Header do Celular */
+        .app-header {
+            padding: 18px 20px 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Ícone 3D Sino com acabamento premium */
+        .icon-3d-bell {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(145deg, #ffffff, #d1d5db);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            font-size: 22px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25), inset 0 2px 2px #ffffff;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-3d-bell:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .brand-info h1 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(90deg, var(--text-main), var(--text-retro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .retro-tag {
+            font-family: 'VT323', monospace;
+            font-size: 0.95rem;
+            color: var(--retro-pink);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .account-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-free {
+            background: rgba(148, 163, 184, 0.2);
+            color: var(--text-muted);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .badge-premium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Area de Conteudo Principal com Scroll Customizado */
+        .app-body {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .app-body::-webkit-scrollbar {
+            width: 5px;
+        }
+        .app-body::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+
+        /* Glass Cards */
+        .card {
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title i {
+            color: var(--primary);
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--glass-input);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-pix {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+        }
+
+        .btn-disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        /* Simulador Notificação Android Nativa Real-Time */
+        .android-notification-sim {
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 20px;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .android-notification-sim::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary);
+        }
+
+        .noti-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .noti-app-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .noti-app-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #1e293b;
+        }
+
+        .noti-content h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 2px;
+        }
+
+        .noti-content p {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.3;
+        }
+
+        /* Grid da Biblioteca de Ícones Nativa */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .icon-item {
+            aspect-ratio: 1;
+            background: var(--glass-input);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        .icon-item.selected, .icon-item:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.25);
+            color: #fff;
+        }
+
+        /* Lista de Histórico e Modelos */
+        .item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        /* Bottom Navigation Bar (App Mobile Style) */
+        .bottom-nav {
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.15);
+        }
+
+        /* Modal Overlay */
+        .modal {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 360px;
+            background: var(--glass-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Utility classes */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .flex-gap { display: flex; gap: 8px; }
+        .badge-status-item { font-size: 0.65rem; padding: 2px 6px; border-radius: 6px; font-weight: bold; }
+        .bg-pending { background: #eab308; color: #000; }
+        .bg-approved { background: #10b981; color: #fff; }
+        .bg-rejected { background: #ef4444; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay para imagem de fundo customizada dinamica -->
+    <div id="customBgOverlay"></div>
+
+    <div class="mobile-frame">
+        <!-- HEADER DO APP -->
+        <header class="app-header">
+            <div class="brand-box">
+                <div class="icon-3d-bell">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="brand-info">
+                    <h1>Notifiquei Pro</h1>
+                    <span class="retro-tag">SYSTEM v2.6</span>
+                </div>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <button onclick="toggleTheme()" class="btn-outline" style="width: 32px; height: 32px; border-radius: 50%; padding: 0;">
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
+                </button>
+                <span id="accountBadge" class="account-badge badge-free">
+                    <i class="fa-solid fa-user"></i> Gratuito
+                </span>
+            </div>
+        </header>
+
+        <!-- CORPO PRINCIPAL DE CONTEÚDO (TELAS) -->
+        <main class="app-body">
+
+            <!-- TELAS DE AUTH (LOGIN GOOGLE) -->
+            <div id="authSection" class="card text-center">
+                <i class="fa-brands fa-google" style="font-size: 2rem; color: #ea4335; margin-bottom: 8px;"></i>
+                <h3 style="font-size: 1rem; margin-bottom: 4px;">Autenticação Firebase</h3>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px;">Entre com sua Conta do Google para sincronizar suas permissões.</p>
+                <div id="userInfo" class="hidden" style="margin-bottom: 10px; font-size: 0.8rem; font-weight: 600; color: var(--text-retro);"></div>
+                <button id="loginBtn" onclick="simulatedGoogleLogin()" class="btn btn-primary">
+                    <i class="fa-brands fa-google"></i> Entrar com Google
+                </button>
+            </div>
+
+            <!-- TELA 1: CRIADOR DE NOTIFICAÇÕES -->
+            <div id="screenCreator" class="screen-content">
+                
+                <!-- SIMULADOR EM TEMPO REAL -->
+                <div class="form-group">
+                    <label class="form-label"><i class="fa-solid fa-eye"></i> PRÉ-VISUALIZAÇÃO EM TEMPO REAL (ANDROID)</label>
+                    <div class="android-notification-sim">
+                        <div class="noti-top-bar">
+                            <div class="noti-app-info">
+                                <div class="noti-app-icon" id="simIconBox">
+                                    <i id="simIcon" class="fa-solid fa-bell"></i>
+                                </div>
+                                <span>Notifiquei Pro • agora</span>
+                            </div>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <div class="noti-content">
+                            <h4 id="simTitle">Título da Notificação</h4>
+                            <p id="simBody">Sua mensagem customizada aparecerá aqui em tempo real enquanto você digita.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORMULÁRIO DE NOTIFICAÇÃO -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-pen-to-square"></i> Detalhes da Notificação</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Nome do Modelo (Identificação)</label>
+                        <input type="text" id="modelName" class="form-input" placeholder="Ex: Lembrete de Reunião">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Título da Notificação</label>
+                        <input type="text" id="notiTitle" oninput="updateRealtimePreview()" class="form-input" placeholder="Digite o título...">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Mensagem da Notificação</label>
+                        <textarea id="notiBody" oninput="updateRealtimePreview()" class="form-textarea" rows="2" placeholder="Digite a mensagem completa..."></textarea>
+                    </div>
+
+                    <!-- ÍCONES -->
+                    <div class="form-group">
+                        <label class="form-label">Ícone da Notificação</label>
+                        <div class="icon-grid">
+                            <div class="icon-item selected" onclick="selectIcon(this, 'fa-bell')"><i class="fa-solid fa-bell"></i></div>
+                            <div class="icon-item" onclick="selectIcon(this, 'fa-message')"><i class="fa-solid fa-message"></i></div>
+                            <div class="icon-item" onclick="selectIcon(this, 'fa-calendar')"><i class="fa-solid fa-calendar"></i></div>
+                            <div class="icon-item" onclick="selectIcon(this, 'fa-triangle-exclamation')"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div class="icon-item" onclick="selectIcon(this, 'fa-shield-halved')"><i class="fa-solid fa-shield-halved"></i></div>
+                        </div>
+                    </div>
+
+                    <!-- SOM -->
+                    <div class="form-group">
+                        <label class="form-label">Som da Notificação</label>
+                        <select id="notiSound" class="form-select">
+                            <option value="default">Som Padrão do Sistema</option>
+                            <option value="retro">Sintetizador Retro Chime</option>
+                            <option value="digital">Alerta Digital Pro</option>
+                        </select>
+                    </div>
+
+                    <!-- AGENDAMENTO -->
+                    <div class="form-group">
+                        <label class="form-label">Data e Horário para Disparo</label>
+                        <input type="datetime-local" id="scheduleTime" class="form-input">
+                    </div>
+
+                    <!-- BOTÕES DE AÇÃO -->
+                    <div class="flex-gap" style="margin-top: 14px;">
+                        <button id="btnSendNow" onclick="sendInstantNotification()" class="btn btn-primary btn-disabled" disabled>
+                            <i class="fa-solid fa-paper-plane"></i> Enviar Agora
+                        </button>
+                        <button id="btnSaveModel" onclick="saveModel()" class="btn btn-outline btn-disabled" disabled>
+                            <i class="fa-solid fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA 2: ASSINATURA PREMIUM VIA PIX -->
+            <div id="screenPremium" class="screen-content hidden">
+                <div class="card text-center">
+                    <i class="fa-solid fa-crown" style="font-size: 2.5rem; color: var(--gold-premium); margin-bottom: 8px;"></i>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 4px;">Assinatura Premium Pro</h3>
+                    <p style="font-size: 0.78rem; color: var(--text-muted);">Acesso vitalício sem mensalidades recorrentes.</p>
+                    
+                    <div style="margin: 16px 0; font-size: 1.8rem; font-weight: 800; color: var(--pix-color);">
+                        R$ 48,90
+                    </div>
+
+                    <!-- QR CODE PIX -->
+                    <div style="background: #ffffff; padding: 12px; border-radius: 16px; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                        <img id="pixQrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020126360014BR.GOV.BCB.PIX0114tfagro2023@gmail.com520400005303986540548.905802BR" width="150" height="150" alt="QR Code Pix">
+                    </div>
+
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label class="form-label">Chave Pix Copia e Cola</label>
+                        <input type="text" id="pixKeyText" class="form-input text-center" value="tfagro2023@gmail.com" readonly>
+                    </div>
+
+                    <button onclick="copyPix()" class="btn btn-pix" style="margin-bottom: 16px;">
+                        <i class="fa-solid fa-copy"></i> Copiar Chave Pix
+                    </button>
+
+                    <div style="border-top: 1px solid var(--glass-border); padding-top: 14px; text-align: left;">
+                        <label class="form-label">Enviar Comprovante (Imagem ou PDF)</label>
+                        <input type="file" id="receiptFileInput" accept="image/*,.pdf" class="form-input">
+                        <button onclick="uploadReceipt()" class="btn btn-primary" style="margin-top: 10px;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Enviar Comprovante de Pagamento
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA 3: MODELOS E HISTÓRICO -->
+            <div id="screenHistory" class="screen-content hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-star"></i> Meus Modelos Favoritos</span>
+                    </div>
+                    <div id="modelsList">
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Nenhum modelo salvo ainda.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Histórico de Envios</span>
+                    </div>
+                    <div id="historyList">
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Nenhum envio registrado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TELA 4: PAINEL ADMINISTRATIVO EXCLUSIVO -->
+            <div id="screenAdmin" class="screen-content hidden">
+                <!-- GESTÃO VISUAL DO FUNDO -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-palette"></i> Gestão de Fundo do App</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL da Imagem de Fundo</label>
+                        <input type="text" id="adminBgUrl" class="form-input" placeholder="https://exemplo.com/imagem.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Desfoque (Blur): <span id="blurValText">16px</span></label>
+                        <input type="range" id="blurRange" min="0" max="30" value="16" style="width:100%" oninput="updateVisualEffects()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Brilho (Brightness): <span id="brightValText">100%</span></label>
+                        <input type="range" id="brightRange" min="30" max="150" value="100" style="width:100%" oninput="updateVisualEffects()">
+                    </div>
+                    <div class="flex-gap">
+                        <button onclick="applyAdminBg()" class="btn btn-primary"><i class="fa-solid fa-check"></i> Publicar Fundo</button>
+                        <button onclick="restoreDefaultBg()" class="btn btn-outline"><i class="fa-solid fa-rotate-left"></i> Restaurar</button>
+                    </div>
+                </div>
+
+                <!-- GESTÃO PIX E PAGAMENTOS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-receipt"></i> Gestão de Pagamentos Pix</span>
+                    </div>
+                    <div id="adminPaymentsList">
+                        <p style="font-size:0.75rem; color:var(--text-muted);">Sem comprovantes pendentes no momento.</p>
+                    </div>
+                </div>
+
+                <!-- GESTÃO DE USUÁRIOS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title"><i class="fa-solid fa-users"></i> Gestão de Usuários</span>
+                    </div>
+                    <div id="adminUsersList" style="max-height: 200px; overflow-y: auto;">
+                        <!-- Usuários listados dinamicamente -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchScreen('screenCreator', this)">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Criar</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screenPremium', this)">
+                <i class="fa-solid fa-crown"></i>
+                <span>Premium</span>
+            </div>
+            <div class="nav-item" onclick="switchScreen('screenHistory', this)">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Salvos</span>
+            </div>
+            <div id="navAdminItem" class="nav-item hidden" onclick="switchScreen('screenAdmin', this)">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Admin</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- MODAL DE NOTIFICAÇÃO DISPARADA DO SISTEMA -->
+    <div id="systemNotiModal" class="modal">
+        <div class="modal-content">
+            <i class="fa-solid fa-bell-concierge" style="font-size: 2.5rem; color: var(--retro-cyan); margin-bottom: 10px;"></i>
+            <h3 id="modalTitle" style="font-size: 1rem; margin-bottom: 6px;">Notificação Disparada!</h3>
+            <p id="modalBody" style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;"></p>
+            <button onclick="closeModal()" class="btn btn-primary">Fechar</button>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE LÓGICA E ESTADO DA APLICAÇÃO -->
+    <script>
+        /* ==================== ESTADO GLOBAL DA APLICAÇÃO ==================== */
+        const ADMIN_EMAILS = ["tfagro2023@gmail.com", "kauaesuelen03@gmail.com"];
+        
+        let state = {
+            currentUser: null,
+            isPremium: false,
+            selectedIcon: 'fa-bell',
+            history: JSON.parse(localStorage.getItem('np_history') || '[]'),
+            models: JSON.parse(localStorage.getItem('np_models') || '[]'),
+            payments: JSON.parse(localStorage.getItem('np_payments') || '[]'),
+            users: JSON.parse(localStorage.getItem('np_users') || '[]')
+        };
+
+        /* ==================== INICIALIZAÇÃO ==================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRealtimePreview();
+            renderHistoryAndModels();
+            renderAdminLists();
+        });
+
+        /* ==================== TEMAS CLARO/ESCURO ==================== */
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', target);
+            document.getElementById('themeIcon').className = target === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        }
+
+        /* ==================== TROCA DE TELAS ==================== */
+        function switchScreen(screenId, element) {
+            document.querySelectorAll('.screen-content').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            
+            document.getElementById(screenId).classList.remove('hidden');
+            if(element) element.classList.add('active');
+        }
+
+        /* ==================== AUTHENTICATION GOOGLE SIMULATION ==================== */
+        function simulatedGoogleLogin() {
+            if(!state.currentUser) {
+                const email = prompt("Simulação do Firebase Auth:\nDigite seu e-mail do Google:", "usuario@gmail.com");
+                if(!email) return;
+
+                const cleanEmail = email.trim().toLowerCase();
+                state.currentUser = {
+                    name: cleanEmail.split('@')[0].toUpperCase(),
+                    email: cleanEmail,
+                    registerDate: new Date().toLocaleDateString('pt-BR')
+                };
+
+                // Registra usuário no banco local se não existir
+                let existing = state.users.find(u => u.email === cleanEmail);
+                if(!existing) {
+                    existing = {
+                        name: state.currentUser.name,
+                        email: cleanEmail,
+                        date: state.currentUser.registerDate,
+                        status: 'Gratuito'
+                    };
+                    state.users.push(existing);
+                    saveState();
+                }
+
+                state.isPremium = (existing.status === 'Premium');
+
+                document.getElementById('userInfo').innerText = `Conectado como: ${state.currentUser.email}`;
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('loginBtn').innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Sair da Conta`;
+
+                checkAdminAndPermissions();
+            } else {
+                // Logout
+                state.currentUser = null;
+                state.isPremium = false;
+                document.getElementById('userInfo').classList.add('hidden');
+                document.getElementById('loginBtn').innerHTML = `<i class="fa-brands fa-google"></i> Entrar com Google`;
+                document.getElementById('navAdminItem').classList.add('hidden');
+                updateAccountBadge();
+            }
+        }
+
+        function checkAdminAndPermissions() {
+            updateAccountBadge();
+            
+            // Checa privilégios de Admin
+            if(state.currentUser && ADMIN_EMAILS.includes(state.currentUser.email)) {
+                document.getElementById('navAdminItem').classList.remove('hidden');
+            } else {
+                document.getElementById('navAdminItem').classList.add('hidden');
+            }
+        }
+
+        function updateAccountBadge() {
+            const badge = document.getElementById('accountBadge');
+            const btnSend = document.getElementById('btnSendNow');
+            const btnSave = document.getElementById('btnSaveModel');
+
+            if(state.isPremium) {
+                badge.className = 'account-badge badge-premium';
+                badge.innerHTML = `<i class="fa-solid fa-crown"></i> Premium`;
+                btnSend.disabled = false;
+                btnSend.classList.remove('btn-disabled');
+                btnSave.disabled = false;
+                btnSave.classList.remove('btn-disabled');
+            } else {
+                badge.className = 'account-badge badge-free';
+                badge.innerHTML = `<i class="fa-solid fa-user"></i> Gratuito`;
+                btnSend.disabled = true;
+                btnSend.classList.add('btn-disabled');
+                btnSave.disabled = true;
+                btnSave.classList.add('btn-disabled');
+            }
+        }
+
+        /* ==================== CRIADOR E PREVIEW EM TEMPO REAL ==================== */
+        function updateRealtimePreview() {
+            const title = document.getElementById('notiTitle').value.trim();
+            const body = document.getElementById('notiBody').value.trim();
+
+            document.getElementById('simTitle').innerText = title !== "" ? title : "Título da Notificação";
+            document.getElementById('simBody').innerText = body !== "" ? body : "Sua mensagem customizada aparecerá aqui em tempo real enquanto você digita.";
+        }
+
+        function selectIcon(element, iconClass) {
+            document.querySelectorAll('.icon-item').forEach(i => i.classList.remove('selected'));
+            element.classList.add('selected');
+            state.selectedIcon = iconClass;
+            document.getElementById('simIcon').className = `fa-solid ${iconClass}`;
+        }
+
+        /* ==================== ENVIO E AGENDAMENTO ==================== */
+        function sendInstantNotification() {
+            if(!state.isPremium) {
+                alert("Restrição de Conta Gratuita: Assine o plano Premium para realizar envios instantâneos ou agendados!");
+                return;
+            }
+
+            const title = document.getElementById('notiTitle').value.trim();
+            const body = document.getElementById('notiBody').value.trim();
+
+            if(!title || !body) {
+                alert("Por favor, preencha o título e a mensagem antes de enviar.");
+                return;
+            }
+
+            // Registra no Histórico
+            const newItem = {
+                title: title,
+                body: body,
+                date: new Date().toLocaleDateString('pt-BR'),
+                time: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
+                status: 'Enviado'
+            };
+
+            state.history.unshift(newItem);
+            saveState();
+            renderHistoryAndModels();
+
+            // Abre modal do simulador nativo
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalBody').innerText = body;
+            document.getElementById('systemNotiModal').classList.add('active');
+        }
+
+        function saveModel() {
+            if(!state.isPremium) {
+                alert("Somente usuários Premium podem salvar modelos de notificação.");
+                return;
+            }
+
+            const name = document.getElementById('modelName').value.trim();
+            const title = document.getElementById('notiTitle').value.trim();
+            const body = document.getElementById('notiBody').value.trim();
+
+            if(!name || !title) {
+                alert("Preencha o Nome do Modelo e o Título para salvar.");
+                return;
+            }
+
+            state.models.push({ name, title, body, icon: state.selectedIcon });
+            saveState();
+            renderHistoryAndModels();
+            alert("Modelo salvo com sucesso!");
+        }
+
+        function closeModal() {
+            document.getElementById('systemNotiModal').classList.remove('active');
+        }
+
+        /* ==================== SISTEMA PIX ==================== */
+        function copyPix() {
+            const key = document.getElementById('pixKeyText').value;
+            navigator.clipboard.writeText(key);
+            alert("Chave Pix copiada para a área de transferência!");
+        }
+
+        function uploadReceipt() {
+            if(!state.currentUser) {
+                alert("Faça login com sua conta do Google primeiro!");
+                return;
+            }
+
+            const fileInput = document.getElementById('receiptFileInput');
+            if(fileInput.files.length === 0) {
+                alert("Selecione um arquivo de comprovante.");
+                return;
+            }
+
+            const payment = {
+                id: Date.now(),
+                userEmail: state.currentUser.email,
+                userName: state.currentUser.name,
+                fileName: fileInput.files[0].name,
+                date: new Date().toLocaleDateString('pt-BR'),
+                status: 'Pendente'
+            };
+
+            state.payments.push(payment);
+            
+            // Atualiza status do usuário para Pendente
+            let u = state.users.find(x => x.email === state.currentUser.email);
+            if(u) u.status = 'Pendente';
+
+            saveState();
+            renderAdminLists();
+            
+            alert("Comprovante enviado com sucesso! Status atual: PENDENTE. Notificação automática disparada para os administradores.");
+        }
+
+        /* ==================== PAINEL ADMINISTRATIVO ==================== */
+        function renderAdminLists() {
+            // Pagamentos
+            const payList = document.getElementById('adminPaymentsList');
+            if(state.payments.length === 0) {
+                payList.innerHTML = `<p style="font-size:0.75rem; color:var(--text-muted);">Sem comprovantes no momento.</p>`;
+            } else {
+                payList.innerHTML = state.payments.map(p => `
+                    <div class="item-row">
+                        <div>
+                            <strong>${p.userName} (${p.userEmail})</strong><br>
+                            <span style="font-size:0.7rem; color:var(--text-muted);">${p.fileName} • ${p.date}</span>
+                        </div>
+                        <div>
+                            ${p.status === 'Pendente' ? `
+                                <button onclick="approvePayment('${p.userEmail}', ${p.id})" class="btn btn-pix" style="padding:4px 8px; font-size:0.7rem;">Aprovar</button>
+                            ` : `<span class="badge-status-item bg-approved">${p.status}</span>`}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Usuários
+            const userList = document.getElementById('adminUsersList');
+            userList.innerHTML = state.users.map(u => `
+                <div class="item-row">
+                    <div>
+                        <strong>${u.name}</strong> (${u.email})<br>
+                        <span style="font-size:0.7rem; color:var(--text-muted);">Cadastrado em: ${u.date}</span>
+                    </div>
+                    <span class="badge-status-item ${u.status === 'Premium' ? 'bg-approved' : u.status === 'Pendente' ? 'bg-pending' : 'bg-rejected'}">${u.status}</span>
+                </div>
+            `).join('');
+        }
+
+        function approvePayment(userEmail, paymentId) {
+            const pay = state.payments.find(p => p.id === paymentId);
+            if(pay) pay.status = 'Aprovado';
+
+            const u = state.users.find(x => x.email === userEmail);
+            if(u) u.status = 'Premium';
+
+            if(state.currentUser && state.currentUser.email === userEmail) {
+                state.isPremium = true;
+                updateAccountBadge();
+            }
+
+            saveState();
+            renderAdminLists();
+            alert(`Acesso Premium liberado imediatamente para ${userEmail}!`);
+        }
+
+        /* Customize Fundo App */
+        function updateVisualEffects() {
+            const blur = document.getElementById('blurRange').value;
+            const bright = document.getElementById('brightRange').value;
+            
+            document.getElementById('blurValText').innerText = blur + 'px';
+            document.getElementById('brightValText').innerText = bright + '%';
+
+            document.documentElement.style.setProperty('--blur-val', blur + 'px');
+            document.documentElement.style.setProperty('--brightness-val', bright + '%');
+        }
+
+        function applyAdminBg() {
+            const url = document.getElementById('adminBgUrl').value.trim();
+            if(url) {
+                document.getElementById('customBgOverlay').style.backgroundImage = `url('${url}')`;
+                alert("Nova imagem de fundo publicada em tempo real para todos os usuários!");
+            }
+        }
+
+        function restoreDefaultBg() {
+            document.getElementById('customBgOverlay').style.backgroundImage = 'none';
+            document.getElementById('adminBgUrl').value = '';
+            alert("Fundo padrão do aplicativo restaurado!");
+        }
+
+        /* ==================== RENDERIZAÇÃO E UTILS ==================== */
+        function renderHistoryAndModels() {
+            const histList = document.getElementById('historyList');
+            if(state.history.length === 0) {
+                histList.innerHTML = `<p style="font-size:0.75rem; color:var(--text-muted);">Nenhum envio registrado.</p>`;
+            } else {
+                histList.innerHTML = state.history.map(h => `
+                    <div class="item-row">
+                        <div>
+                            <strong>${h.title}</strong>
+                            <p style="font-size:0.72rem; color:var(--text-muted);">${h.body}</p>
+                        </div>
+                        <div style="text-align:right; font-size:0.68rem; color:var(--text-muted);">
+                            ${h.date}<br>${h.time}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const modelList = document.getElementById('modelsList');
+            if(state.models.length === 0) {
+                modelList.innerHTML = `<p style="font-size:0.75rem; color:var(--text-muted);">Nenhum modelo salvo ainda.</p>`;
+            } else {
+                modelList.innerHTML = state.models.map(m => `
+                    <div class="item-row">
+                        <div>
+                            <strong><i class="fa-solid ${m.icon}"></i> ${m.name}</strong>
+                            <p style="font-size:0.72rem; color:var(--text-muted);">${m.title}</p>
+                        </div>
+                        <button onclick="useModel('${m.title}', '${m.body}')" class="btn btn-outline" style="padding:4px 8px; font-size:0.68rem; width:auto;">Usar</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function useModel(title, body) {
+            document.getElementById('notiTitle').value = title;
+            document.getElementById('notiBody').value = body;
+            updateRealtimePreview();
+            switchScreen('screenCreator', document.querySelectorAll('.nav-item')[0]);
+        }
+
+        function saveState() {
+            localStorage.setItem('np_history', JSON.stringify(state.history));
+            localStorage.setItem('np_models', JSON.stringify(state.models));
+            localStorage.setItem('np_payments', JSON.stringify(state.payments));
+            localStorage.setItem('np_users', JSON.stringify(state.users));
+        }
+    </script>
+</body>
+</html>
+
+```
